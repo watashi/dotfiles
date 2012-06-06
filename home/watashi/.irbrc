@@ -1,5 +1,14 @@
 # .irbrc - last change: 2008-01-22 (ab)
 
+
+
+
+require 'prime'
+
+
+
+
+
 ### rubygems
 require 'rubygems' rescue nil
 

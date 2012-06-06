@@ -16,6 +16,8 @@ if has("gui_running")
 	set lines=32 columns=100
 	colo desert
 "	set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
+    set guioptions-=T
+    set nomousehide
 endif
 
 highlight WhitespaceEOL ctermbg=red guibg=red
@@ -26,6 +28,7 @@ match WhitespaceEOL /\s\+$/
 map <F5> :call DoIt()<CR>
 
 function DoIt()
+    let CompileIt="true"
 	if &filetype == "c"
 		let CompileIt="gcc \\\"%\\\" -Wall -O2 -lm -D__WATASHI__"
 		let RunIt="./a.out"
@@ -48,36 +51,33 @@ function DoIt()
 		let CompileIt="xelatex \\\"%\\\""
 		let RunIt="evince \\\"%<.pdf\\\""
 	elseif &filetype == "haskell" || &filetype == "lhaskell"
-		let CompileIt="true"
 		let RunIt="ghci \\\"%\\\""
 	elseif &filetype == "sh"
-		let CompileIt="true"
 		let RunIt="bash \\\"%\\\""
 	elseif &filetype == "ruby"
-		let CompileIt="true"
 		let RunIt="ruby \\\"%\\\""
     elseif &filetype == "lisp"
-        let CompileIt="true"
         let RunIt="clisp -i \\\"%\\\""
     elseif &filetype == "tcl"
-        let CompileIt="true"
-        let RunIt="tclsh \\\"%\\\""
-	elseif &filetype == "php" || &filetype == "perl" || &filetype == "python" || &filetype == "scala"
-		let CompileIt="true"
+        let RunIt="perl \\\"%\\\""  " work for both tclsh and wish
+    elseif &filetype == "python"
+        let RunIt="python2 \\\"%\\\""
+    elseif &filetype == "javascript"
+        let RunIt="node \\\"%\\\""
+	elseif &filetype == "php" || &filetype == "perl" || &filetype == "scala"
 		let RunIt=&filetype . " \\\"%\\\""
 	else
-		let CompileIt="true"
 		let RunIt="true"
 	endif
 	execute "w"
-	execute "!xterm -fn 10*20 -geometry 80x32 -e \"" . CompileIt . " && echo \"__compiled__\" && " . RunIt . " ; read -n 1\""
+	execute "!xterm -fn '10*20' -geometry 80x32 -e \"" . CompileIt . " && echo \"__compiled__\" && " . RunIt . " ; read -n 1\""
 endfunction
 
 map <F6> :call DoIt()2<CR>
 
 function DoIt2()
 	execute "w"
-	execute "!xterm -fn 10*20 -geometry 80x32 -e \"g++ \\\"%\\\" -Wall -O2 -D__WATASHI__  && echo \"__compiled__\" && ./a.out ; read -n 1\""
+	execute "!xterm -fn '10*20' -geometry 80x32 -e \"g++ \\\"%\\\" -Wall -Weffc++ -O2 -D__WATASHI__  && echo \"__compiled__\" && ./a.out ; read -n 1\""
 endfunction
 
 

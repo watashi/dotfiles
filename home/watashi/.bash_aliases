@@ -26,3 +26,4 @@ alias fsc='fsc -deprecation'
 alias lunar='luit -encoding GBK \lunar -h'
 alias lunar0='\lunar -h `date "+%Y %m %d %H"` | iconv -f GBK -t UTF-8'
 
+alias pry='ruby -r pry -e pry'
