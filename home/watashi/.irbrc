@@ -1,7 +1,7 @@
 # .irbrc - last change: 2008-01-22 (ab)
 
 
-
+$LOAD_PATH << '.'
 
 require 'prime'
 
