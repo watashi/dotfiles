@@ -1,10 +1,15 @@
-[color]
-  diff = auto
-  status = auto
-  branch = auto
 [alias]
   br = branch
   co = checkout
   ci = commit
   di = diff
   st = status
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+[core]
+  excludesfile = ~/.gitignore
+[user]
+  email = zejun.wu@gmail.com
+  name = watashi
