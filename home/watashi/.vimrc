@@ -2,10 +2,10 @@ source $VIMRUNTIME/mswin.vim
 source $VIMRUNTIME/vimrc_example.vim
 behave mswin
 
-set fileencodings=utf-8,gb18030,shift-jis,big5,euc-jp,euc-kr
+set fileencodings=utf-8,ucs-bom,gb18030,shift-jis,big5,euc-jp,euc-kr
 set fileformats=unix
 set fileformat=unix
-set number autoindent tabstop=4 shiftwidth=4 expandtab smarttab
+set number autoindent tabstop=2 shiftwidth=2 expandtab smarttab
 " set ruler ttyfast
 colorscheme ron
 
