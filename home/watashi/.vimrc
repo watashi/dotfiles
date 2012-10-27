@@ -12,12 +12,12 @@ colorscheme ron
 autocmd FileType c,cpp set cindent cinoptions=:0g0t0(sus
 
 if has("gui_running")
-"	set lines=40 columns=111
-	set lines=32 columns=100
-	colo desert
-"	set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
-    set guioptions-=T
-    set nomousehide
+  "  set lines=40 columns=111
+  set lines=32 columns=100
+  colo desert
+  "  set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
+  set guioptions-=T
+  set nomousehide
 endif
 
 highlight WhitespaceEOL ctermbg=red guibg=red
@@ -25,59 +25,60 @@ match WhitespaceEOL /\s\+$/
 
 " au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 
-map <F5> :call DoIt()<CR>
+map <F5> :call CompileAndRun()<CR>
 
-function DoIt()
-    let CompileIt="true"
-	if &filetype == "c"
-		let CompileIt="gcc \\\"%\\\" -Wall -O2 -lm -D__WATASHI__"
-		let RunIt="./a.out"
-	elseif &filetype == "cpp" || &filetype == "cpp.doxygen"
-		let CompileIt="g++ \\\"%\\\" -std=c++0x -Wall -O2 -D__WATASHI__"
-		let RunIt="./a.out"
-	elseif &filetype == "cs"
-		let CompileIt="gmcs \\\"%\\\""
-		let RunIt="mono \\\"%<.exe\\\""
-	elseif &filetype == "java"
-		let CompileIt="javac -Xlint \\\"%\\\""
-		let RunIt="java \\\"%<\\\" -watashi"
-	elseif &filetype == "pascal"
-		let CompileIt="fpc \\\"%\\\""
-		let RunIt="\\\"./%<\\\""
-	elseif &filetype == "fortran"
-		let CompileIt="gfortran \\\"%\\\""
-		let RunIt="\\\"./a.out\\\""
-	elseif &filetype == "tex"
-		let CompileIt="xelatex \\\"%\\\""
-		let RunIt="evince \\\"%<.pdf\\\""
-	elseif &filetype == "haskell" || &filetype == "lhaskell"
-		let RunIt="ghci \\\"%\\\""
-	elseif &filetype == "sh"
-		let RunIt="bash \\\"%\\\""
-	elseif &filetype == "ruby"
-		let RunIt="ruby \\\"%\\\""
-    elseif &filetype == "lisp"
-        let RunIt="clisp -i \\\"%\\\""
-    elseif &filetype == "tcl"
-        let RunIt="perl \\\"%\\\""  " work for both tclsh and wish
-    elseif &filetype == "python"
-        let RunIt="python2 \\\"%\\\""
-    elseif &filetype == "javascript"
-        let RunIt="node \\\"%\\\""
-	elseif &filetype == "php" || &filetype == "perl" || &filetype == "scala"
-		let RunIt=&filetype . " \\\"%\\\""
-	else
-		let RunIt="true"
-	endif
-	execute "w"
-	execute "!xterm -fn '10*20' -geometry 80x32 -e \"" . CompileIt . " && echo \"__compiled__\" && " . RunIt . " ; read -n 1\""
+function DictGet(dict, key, default)
+  if has_key(a:dict, a:key)
+    let value = a:dict[a:key]
+  else
+    let value = a:default
+  endif
+  return substitute(value, '\s%.\b\s', "'\\0'", 'g')
 endfunction
 
-map <F6> :call DoIt()2<CR>
+function CompileAndRun()
+  let compileDict = {
+        \ 'c':            'gcc -O2 -Wall -Wextra -lm -D__WATASHI__ %',
+        \ 'cpp':          'g++ -std=c++0x -O2 -Wall -Wextra -D__WATASHI__ %',
+        \ 'cpp.doxygen':  'g++ -std=c++0x -O2 -Wall -Wextra -D__WATASHI__ %',
+        \ 'cs':           'gmcs %',
+        \ 'java':         'javac -Xlint %',
+        \ 'pascal':       'fpc %',
+        \ 'fortran':      'gfortran %',
+        \ 'tex':          'xelatex %',
+        \ }
+  let compile = DictGet(compileDict, &filetype, 'true')
 
-function DoIt2()
-	execute "w"
-	execute "!xterm -fn '10*20' -geometry 80x32 -e \"g++ \\\"%\\\" -Wall -Weffc++ -O2 -D__WATASHI__  && echo \"__compiled__\" && ./a.out ; read -n 1\""
+  let runDict = {
+        \ 'c':            './a.out',
+        \ 'cpp':          './a.out',
+        \ 'cpp.doxygen':  './a.out',
+        \ 'cs':           'mono %<.exe',
+        \ 'java':         'java -D__WATASHI__ %<',
+        \ 'pascal':       './%<',
+        \ 'fortran':      './a.out',
+        \ 'tex':          'evince %<.pdf',
+        \
+        \ 'haskell':      'ghci %',
+        \ 'lhaskell':     'ghci %',
+        \ 'sh':           'bash %',
+        \ 'lisp':         'clisp -i %',
+        \ 'python':       'python2 %',
+        \ 'tcl':          'perl %',
+        \ 'javascript':   'node %',
+        \
+        \ 'perl':         'perl %',
+        \ 'php':          'php %',
+        \ 'ruby':         'ruby %',
+        \ 'scala':        'scala %',
+        \ }
+  let run = DictGet(runDict, &filetype, 'false')
+
+  let compileAndRun =
+        \ compile . ' && echo __compiled__ && ' .
+        \ run . ' ; echo __done__ \[$?\] && wait && read -n 1'
+
+  execute 'w'
+  execute '!xterm -fn "10*20" -geometry 80x32 -e "' . compileAndRun . '"'
 endfunction
-
 
