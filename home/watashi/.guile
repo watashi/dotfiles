@@ -1,0 +1,11 @@
+;; vim: ft=scheme
+
+(use-modules (ice-9 readline))
+(activate-readline)
+
+(define (p . args)
+  (for-each (lambda (arg)
+              (display arg current-error-port)
+              (newline current-error-port))
+            args))
+
