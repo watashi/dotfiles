@@ -10,6 +10,8 @@
   branch = auto
 [core]
   excludesfile = ~/.gitignore
+[push]
+  default = simple
 [user]
   email = zejun.wu@gmail.com
   name = watashi
