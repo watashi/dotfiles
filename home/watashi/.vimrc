@@ -2,9 +2,11 @@ source $VIMRUNTIME/mswin.vim
 source $VIMRUNTIME/vimrc_example.vim
 behave mswin
 
-set fileencodings=utf-8,ucs-bom,gb18030,shift-jis,big5,euc-jp,euc-kr
+set fileencodings=ucs-bom,utf-8,gb18030,shift-jis,big5,euc-jp,euc-kr
+" set fileencoding=utf-8
 set fileformats=unix
 set fileformat=unix
+set nobomb
 set number autoindent tabstop=2 shiftwidth=2 expandtab smarttab
 " set ruler ttyfast
 colorscheme ron
@@ -59,24 +61,26 @@ function CompileAndRun()
         \ 'fortran':      './a.out',
         \ 'tex':          'evince %<.pdf',
         \
-        \ 'haskell':      'ghci %',
-        \ 'lhaskell':     'ghci %',
+        \ 'haskell':      'ulimit -t 60 && ghci -Wall %',
+        \ 'lhaskell':     'ghci -Wall %',
         \ 'sh':           'bash %',
         \ 'lisp':         'clisp -i %',
         \ 'python':       'python2 %',
         \ 'tcl':          'perl %',
         \ 'javascript':   'node %',
+        \ 'scheme':       'guile %',
         \
         \ 'perl':         'perl %',
         \ 'php':          'php %',
         \ 'ruby':         'ruby %',
         \ 'scala':        'scala %',
+        \ 'ocaml':        'ocaml %',
         \ }
   let run = DictGet(runDict, &filetype, 'false')
 
   let compileAndRun =
         \ compile . ' && echo __compiled__ && ' .
-        \ run . ' ; echo __done__ \[$?\] && wait && read -n 1'
+        \ run . ' ; echo __done__ \[\$?\] && wait && read -n 1'
 
   execute 'w'
   execute '!xterm -fn "10*20" -geometry 80x32 -e "' . compileAndRun . '"'
