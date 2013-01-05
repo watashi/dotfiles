@@ -43,7 +43,7 @@ function CompileAndRun()
         \ 'c':            'gcc -O2 -Wall -Wextra -lm -D__WATASHI__ %',
         \ 'cpp':          'g++ -std=c++0x -O2 -Wall -Wextra -D__WATASHI__ %',
         \ 'cpp.doxygen':  'g++ -std=c++0x -O2 -Wall -Wextra -D__WATASHI__ %',
-        \ 'cs':           'gmcs %',
+        \ 'cs':           'dmcs -r:System.Numerics -langversion:Future %',
         \ 'java':         'javac -Xlint %',
         \ 'pascal':       'fpc %',
         \ 'fortran':      'gfortran %',
