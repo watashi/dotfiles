@@ -211,9 +211,9 @@ export JAVA_HOME=/opt/java
 export PATH=$JAVA_HOME/bin:$PATH
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
+export GTK_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export QT_IM_MODULE=fcitx
 
 export HISTSIZE=1024
 export MANPATH=$MANPATH:/usr/local/ch6.3.0/docs/man
@@ -226,5 +226,3 @@ export EDITOR=/usr/bin/vim
 export PATH=/usr/share/perl5/site_perl/auto/share/dist/Cope:$PATH
 # Io
 # export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-
-
