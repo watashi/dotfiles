@@ -7,11 +7,14 @@ set fileencodings=ucs-bom,utf-8,gb18030,shift-jis,big5,euc-jp,euc-kr
 set fileformats=unix
 set fileformat=unix
 set nobomb
-set number autoindent tabstop=2 shiftwidth=2 expandtab smarttab
+set number
+" set foldmethod=syntax foldcolumn=1
+set autoindent tabstop=2 shiftwidth=2 expandtab smarttab
 " set ruler ttyfast
 colorscheme ron
 
 autocmd FileType c,cpp set cindent cinoptions=:0g0t0(sus
+let g:load_doxygen_syntax=1
 
 if has("gui_running")
   "  set lines=40 columns=111
@@ -22,6 +25,8 @@ if has("gui_running")
   set nomousehide
 endif
 
+highlight Tab ctermbg=lightblue guibg=lightblue
+match Tab /\t/
 highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
 
@@ -40,7 +45,7 @@ endfunction
 
 function CompileAndRun()
   let compileDict = {
-        \ 'c':            'gcc -O2 -Wall -Wextra -lm -D__WATASHI__ %',
+        \ 'c':            'gcc -std=c1x -O2 -Wall -Wextra -lm -D__WATASHI__ %',
         \ 'cpp':          'g++ -std=c++0x -O2 -Wall -Wextra -D__WATASHI__ %',
         \ 'cpp.doxygen':  'g++ -std=c++0x -O2 -Wall -Wextra -D__WATASHI__ %',
         \ 'cs':           'dmcs -r:System.Numerics -langversion:Future %',
