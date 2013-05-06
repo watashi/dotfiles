@@ -5,7 +5,7 @@
 
 (define (p . args)
   (for-each (lambda (arg)
-              (display arg current-error-port)
-              (newline current-error-port))
+              (display arg (current-error-port))
+              (newline (current-error-port)))
             args))
 
