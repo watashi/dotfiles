@@ -44,13 +44,16 @@ function DictGet(dict, key, default)
 endfunction
 
 function CompileAndRun()
+  let cc = ' -O3 -Wall -Wextra -Wconversion -Wshadow -D__WATASHI__ %'
+
   let compileDict = {
-        \ 'c':            'gcc -std=c1x -O2 -Wall -Wextra -lm -D__WATASHI__ %',
-        \ 'cpp':          'g++ -std=c++0x -O2 -Wall -Wextra -D__WATASHI__ %',
-        \ 'cpp.doxygen':  'g++ -std=c++0x -O2 -Wall -Wextra -D__WATASHI__ %',
-        \ 'cs':           'dmcs -r:System.Numerics -langversion:Future %',
+        \ 'c':            'gcc -std=c1x -lm' . cc,
+        \ 'cpp':          'g++ -std=c++0x' . cc,
+        \ 'cpp.doxygen':  'g++ -std=c++0x' . cc,
+        \ 'cs':           'dmcs -define:__WATASHI__ -r:System.Numerics -langversion:Future %',
+        \ 'd':            'dmd %',
         \ 'java':         'javac -Xlint %',
-        \ 'pascal':       'fpc %',
+        \ 'pascal':       'fpc -d__WATASHI__ -So -XS %',
         \ 'fortran':      'gfortran %',
         \ 'tex':          'xelatex %',
         \ }
@@ -61,11 +64,13 @@ function CompileAndRun()
         \ 'cpp':          './a.out',
         \ 'cpp.doxygen':  './a.out',
         \ 'cs':           'mono %<.exe',
+        \ 'd':            './%<',
         \ 'java':         'java -D__WATASHI__ %<',
         \ 'pascal':       './%<',
         \ 'fortran':      './a.out',
         \ 'tex':          'evince %<.pdf',
         \
+        \ 'go':           'go run %',
         \ 'haskell':      'ulimit -t 60 && ghci -Wall %',
         \ 'lhaskell':     'ghci -Wall %',
         \ 'sh':           'bash %',
