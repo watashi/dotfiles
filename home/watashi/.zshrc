@@ -222,6 +222,8 @@ export RI=-fansi
 export PAGER=/usr/bin/less
 export EDITOR=/usr/bin/vim
 
+# Gem executables
+export PATH=/home/watashi/.gem/ruby/2.0.0/bin:$PATH
 # Cope
 export PATH=/usr/share/perl5/site_perl/auto/share/dist/Cope:$PATH
 # Io
