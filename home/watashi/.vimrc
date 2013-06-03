@@ -25,10 +25,11 @@ if has("gui_running")
   set nomousehide
 endif
 
-highlight Tab ctermbg=lightblue guibg=lightblue
-match Tab /\t/
 highlight WhitespaceEOL ctermbg=red guibg=red
-match WhitespaceEOL /\s\+$/
+call matchadd("WhitespaceEOL", "\s\+$")
+
+highlight Tab ctermbg=lightblue guibg=lightblue
+call matchadd("Tab", "\t")
 
 " au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 
