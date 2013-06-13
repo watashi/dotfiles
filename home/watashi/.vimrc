@@ -45,7 +45,7 @@ function DictGet(dict, key, default)
 endfunction
 
 function CompileAndRun()
-  let cc = ' -O3 -Wall -Wextra -Wconversion -Wshadow -D__WATASHI__ %'
+  let cc = ' -O3 -Wall -Wextra -Wconversion -D__WATASHI__ %'
 
   let compileDict = {
         \ 'c':            'gcc -std=c1x -lm' . cc,
