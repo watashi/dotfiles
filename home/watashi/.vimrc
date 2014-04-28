@@ -17,13 +17,16 @@ autocmd FileType c,cpp set cindent cinoptions=:0g0t0(sus
 let g:load_doxygen_syntax=1
 
 if has("gui_running")
-  "  set lines=40 columns=111
-  set lines=32 columns=100
+  set lines=40 columns=111
+" set lines=32 columns=100
   colo desert
-  "  set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
+" set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
   set guioptions-=T
   set nomousehide
 endif
+
+set colorcolumn=81
+highlight ColorColumn guibg=black
 
 highlight Tab ctermbg=lightblue guibg=lightblue
 call matchadd("Tab", "\t")
@@ -31,7 +34,12 @@ call matchadd("Tab", "\t")
 highlight WhitespaceEOL ctermbg=red guibg=red
 call matchadd("WhitespaceEOL", "\\s\\+$")
 
+autocmd BufEnter *.phpt set ft=php
+autocmd BufEnter *.php syntax sync fromstart
+autocmd BufEnter *.py set ts=4 sw=4
 " au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
+autocmd BufEnter *.hsc set ft=haskell
+autocmd BufEnter *.hs highlight link hsFunction Identifier
 
 map <F5> :call CompileAndRun()<CR>
 
@@ -96,4 +104,3 @@ function CompileAndRun()
   execute 'w'
   execute '!xterm -fn "10*20" -geometry 80x32 -e "' . compileAndRun . '"'
 endfunction
-
