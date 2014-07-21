@@ -1,0 +1,2 @@
+maxHistorySize: Just 5000
+historyDuplicates: IgnoreConsecutive
