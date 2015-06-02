@@ -1,0 +1,6 @@
+[ui]
+username = Zejun Wu <zejun.wu@gmail.com>
+[alias]
+vlog = log --template '\033[0;33mcommit: {rev}:{node}\n\033[0mAuthor: {author}\nDate:   {date|rfc822date}\n\n\t{desc|strip|fill68|tabindent}\n\n'
+[pager]
+attend-vlog = true
